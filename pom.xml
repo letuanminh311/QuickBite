@@ -8,6 +8,7 @@
     <modules>
         <module>eureka-service</module>
         <module>config-service</module>
+        <module>api-gateway</module>
     </modules>
 
     <properties>
