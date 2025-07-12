@@ -4,7 +4,7 @@ spring:
   application:
     name: api-gateway
   config:
-    import: configserver:http://localhost:8888
+    import: configserver:http://config-service:8888
   cloud:
     gateway:
       discovery:
@@ -13,13 +13,13 @@ spring:
           lower-case-service-id: true
       routes:
         - id: config-server
-          uri: lb://CONFIG-SERVER
+          uri: lb://config-server
           predicates:
             - Path=/config-server/**
           filters:
             - StripPrefix=1
         - id: demo1-service
-          uri: lb://DEMO1-SERVICE
+          uri: lb://demo1-service
           predicates:
             - Path=/demo1-service/**
           filters:
@@ -27,26 +27,8 @@ spring:
 eureka:
   client:
     service-url:
-      defaultZone: http://localhost:8761/eureka/
+      defaultZone: http://eureka-service:8761/eureka/
+    instance:
+      prefer-ip-address: true
     fetch-registry: true
     register-with-eureka: true
-  instance:
-    hostname: localhost
-management:
-  endpoint:
-    gateway:
-      enabled: true
-    routes:
-      enabled: true
-  endpoints:
-    web:
-      exposure:
-        include: health,info,gateway,routes
-  info:
-    env:
-      enabled: true
-info:
-  app:
-    name: API Gateway
-    description: Gateway for QuickBite microservices
-    version: 1.0.0

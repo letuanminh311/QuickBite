@@ -1,0 +1,47 @@
+version: '3.8'
+
+services:
+  eureka-service:
+    build: ./eureka-service
+    container_name: eureka-service
+    ports:
+      - "8761:8761"
+    networks:
+      - quickbite-network
+
+  config-service:
+    build: ./config-service
+    container_name: config-service
+    ports:
+      - "8888:8888"
+    depends_on:
+      - eureka-service
+    networks:
+      - quickbite-network
+
+  demo1-service:
+    build: ./demo1-service
+    container_name: demo1-service
+    ports:
+      - "8085:8085"
+    depends_on:
+      - config-service
+      - eureka-service
+    networks:
+      - quickbite-network
+
+  api-gateway:
+    build: ./api-gateway
+    container_name: api-gateway
+    ports:
+      - "8084:8084"
+    depends_on:
+      - config-service
+      - eureka-service
+      - demo1-service
+    networks:
+      - quickbite-network
+
+networks:
+  quickbite-network:
+    driver: bridge
