@@ -1,0 +1,26 @@
+server:
+  port: 8085
+spring:
+  application:
+    name: demo1-service
+  config:
+    import: configserver:http://localhost:8888
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+  instance:
+    hostname: localhost
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+  info:
+    env:
+      enabled: true
+info:
+  app:
+    name: Demo1 Service
+    description: Demo1 Service for QuickBite
+    version: 1.0.0

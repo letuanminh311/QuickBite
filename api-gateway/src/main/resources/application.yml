@@ -11,14 +11,42 @@ spring:
         locator:
           enabled: true
           lower-case-service-id: true
+      routes:
+        - id: config-server
+          uri: lb://CONFIG-SERVER
+          predicates:
+            - Path=/config-server/**
+          filters:
+            - StripPrefix=1
+        - id: demo1-service
+          uri: lb://DEMO1-SERVICE
+          predicates:
+            - Path=/demo1-service/**
+          filters:
+            - StripPrefix=1
 eureka:
   client:
     service-url:
       defaultZone: http://localhost:8761/eureka/
+    fetch-registry: true
+    register-with-eureka: true
   instance:
     hostname: localhost
 management:
+  endpoint:
+    gateway:
+      enabled: true
+    routes:
+      enabled: true
   endpoints:
     web:
       exposure:
-        include: health,info,gateway
+        include: health,info,gateway,routes
+  info:
+    env:
+      enabled: true
+info:
+  app:
+    name: API Gateway
+    description: Gateway for QuickBite microservices
+    version: 1.0.0
