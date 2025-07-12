@@ -1,2 +1,35 @@
-echo "*/target/" > .gitignore
-echo ".idea/" >> .gitignore
+# ========== Java / Maven ==========
+target/
+*.class
+*.jar
+*.war
+*.ear
+hs_err_pid*
+
+# ========== IntelliJ IDEA ==========
+.idea/
+*.iws
+*.iml
+*.ipr
+out/
+*.log
+
+# ========== VSCode ==========
+.vscode/
+
+# ========== OS / System Files ==========
+.DS_Store
+Thumbs.db
+
+# ========== Docker ==========
+*.env
+**/app.jar
+docker-compose.override.yml
+
+# ========== Backup / Temp ==========
+*~
+*.swp
+*.tmp
+
+# ========== Git ==========
+*.orig
